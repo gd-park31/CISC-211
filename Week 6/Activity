@@ -1,1 +1,53 @@
+constant1 equ 10
+constant2 equ 2
+constant3 equ 3
 
+section .text
+        global _start
+
+_start:
+;       mov eax, [var1]
+;       neg eax
+;       mov ebx, constant1
+;       mul ebx
+;       mov [result1], eax ;1st part of task
+
+;       mov eax, [var1]
+;       neg eax
+;       mov ecx, [var2]
+;       imul ecx
+;       add eax, [var3]
+;       mov [result3], eax ;3rd part of task
+
+;       mov eax, [var1]
+;       mov ebx, [var2]
+;       add eax, ebx
+;       mov ecx, [var3]
+;       mov edx, [var4]
+;       add ecx, edx
+;       add eax, ecx
+;       mov [result2], eax ;2nd part of task
+
+;       mov eax, [var1]
+;       mov ebx, constant2
+;       mul ebx
+;       mov ecx, [var3]
+;       mov edx, constant3
+;       sub ecx, edx
+;       mov ebx, ecx
+;       div bl ;4th part of task
+
+        mov eax,1
+        int 0x80
+
+segment .bss
+        result1 resb 1
+        result2 resb 1
+        result3 resb 1
+        result4 resb 1
+
+segment .data
+        var1 dd 7
+        var2 dd 2
+        var3 dd 10
+        var4 dd 4
