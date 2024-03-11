@@ -1,0 +1,26 @@
+section .text
+        global _start
+
+_start:
+         mov eax, [var1]
+         mov ebx, [var2]
+         mul ebx
+
+        mov ecx, [var3]
+        mov edx, [var4]
+        mul edx
+
+        add eax, ecx
+        mov [result1], eax
+
+        mov eax, 1
+        int 0x80
+
+section .bss
+        result1 resb 1
+
+section .data
+        var1 dd 1
+        var2 dd 2
+        var3 dd 3
+        var4 dd 4
