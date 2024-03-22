@@ -1,0 +1,21 @@
+section .text
+        global _start
+
+_start:
+        mov eax, 1
+        test eax, 2
+        jz oddvalue
+
+        mov eax,'n'
+        mov [result], eax
+        mov eax, 1
+        int 0x80
+
+oddvalue:
+        mov eax, 'y'
+        mov [result], eax
+        mov eax, 1
+        int 0x80
+
+segment .bss
+        result resb 1
