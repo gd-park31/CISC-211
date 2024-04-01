@@ -1,0 +1,19 @@
+section .text
+        global _start
+
+_start:
+        mov eax, 1
+
+incvalue:
+        mov edx, eax
+        and edx, 1
+        jz evnn
+        jmp evnn
+
+evnn:
+        inc eax
+        cmp eax, 20
+        jl incvalue
+
+        mov eax, 1
+        int 0x80
