@@ -1,0 +1,42 @@
+section .text
+        global _start
+
+_start:
+        mov eax, [var1]
+        cmp eax, [var2]
+        jg greaterthan1
+        mov eax, [var2]
+        jmp greaterthan1
+
+greaterthan1:
+        cmp eax, [var3]
+        jg greaterthan2
+        mov eax, [var3]
+        jmp greaterthan2
+
+greaterthan2:
+        cmp eax, [var4]
+        jg greaterthan3
+        mov eax, [var4]
+        jmp greaterthan3
+
+greaterthan3:
+        cmp eax, [var5]
+        jg end
+        mov eax, [var5]
+        jmp end
+
+end:
+        mov [largest], eax
+        mov eax, 1
+        int 0x80
+
+segment .bss
+        largest resb 1
+
+section .data
+        var1 dd 1
+        var2 dd 2
+        var3 dd 3
+        var4 dd 4
+        var5 dd 5
