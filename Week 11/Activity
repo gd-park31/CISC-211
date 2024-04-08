@@ -1,0 +1,47 @@
+section .text
+        global _start
+
+_start:
+        mov eax, 65
+        mov [temp], eax
+        call output
+        ;call newline
+        jmp addeax
+
+output:
+        mov [res], eax
+        mov ecx, res
+        mov edx,1       ;output length
+        mov ebx,1       ;stdout
+        mov eax,4       ;system call (sys_write)
+        int 0x80        ;interrupt kernel
+        ret
+
+;newline:
+        ;mov eax, 10
+        ;mov [res], eax
+        ;mov ecx, res
+        ;call output
+        ;ret
+
+addeax:
+        mov eax, [temp]
+        inc eax
+        mov [temp], eax
+        jmp disp
+
+disp:
+        call output
+        ;call newline
+        mov eax, [temp]
+        cmp eax, 91
+        jl addeax
+        call exit
+
+exit:
+        mov eax,1
+        int 0x80
+
+segment .bss
+        res resb 1
+        temp resb 1
