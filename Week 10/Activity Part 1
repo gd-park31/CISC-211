@@ -1,0 +1,13 @@
+section .text
+        global _start
+
+_start:
+        mov ecx, 10
+
+label:
+        inc eax
+        loop label
+
+        mov eax,1
+        int 0x80
+
