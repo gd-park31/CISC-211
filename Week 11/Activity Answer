@@ -2,33 +2,33 @@ section .text
           global _start
 
 _start:
-          mov eax, 65
+          mov eax, 65                 ;assign 65 to the eax register
 
 label:
-          push eax
-          mov [res], eax
-          mov ecx, res
-          call output
-          call linefeed
-          pop eax
-          inc eax
-          cmp eax, 90
-          jle label
-          call exit
+          push eax                    ;save the value of eax(in this case 65) to the stack
+          mov [res], eax              ;assign the value of eax to the 'res' variable
+          mov ecx, res                ;assign the value of 'res' to the ecx register
+          call output                 ;call the procedure 'output' and execute that block of code
+          call linefeed               ;call the procedure 'linefeed'
+          pop eax                     ;refer to the saved value of 65 in the stack
+          inc eax                     ;increment the value of eax to 66
+          cmp eax, 90                 ;compare the value of eax to 90
+          jle label                   ;jump to the 'label' block if the value of eax is less than or equal to 90
+          call exit                   ;call the procedure 'exit'
 
 linefeed:
-          mov eax, 10
-          mov [res], eax
-          mov ecx, res
-          call output
-          ret
+          mov eax, 10                 ;assign 10 to the eax register
+          mov [res], eax              ;assign the value of eax into the 'res' variable
+          mov ecx, res                ;assign the value in variable 'res' to the ecx register
+          call output                 ;call the procedure 'output'(this outputs a new line)
+          ret                         ;return to where procedure was called
 
 output:
-          mov edx, 1
-          mov ebx, 1
-          mov eax, 4
-          int 0x80
-          ret
+          mov edx, 1                  ;output length
+          mov ebx, 1                  ;stdout
+          mov eax, 4                  ;system call (sys_write)
+          int 0x80                    ;interrupt kernel
+          ret                         ;return to where procedure was called
 
 exit:
           mov eax, 1
