@@ -1,1 +1,29 @@
+```
+section .text
+        global _start
 
+_start:
+        mov eax, 3
+        mov ebx, 0
+        mov ecx, array
+
+        mov ebx, [ecx]
+        add ecx, 4
+        cmp ebx, ecx
+        jg check1
+        mov ebx, [ecx]
+        jmp check1
+
+check1:
+        add ecx, 4
+        cmp ebx, [ecx]
+        jg exit
+        mov ebx, [ecx]
+
+exit:
+        mov eax, 1
+        int 0x80
+
+section .data
+        array dd 1, 2, 3
+```
