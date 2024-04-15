@@ -1,1 +1,13 @@
+section .text
+        global _start
+
+_start:
+        mov ecx, 10
+
+fibseq:
+        add eax, 
+        loop fibseq
+
+        mov eax, 1
+        int 0x80
 
