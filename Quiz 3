@@ -1,0 +1,21 @@
+section .text
+        global _start
+
+_start:
+        mov ecx, 3
+        mov edx, 0
+
+factloop:
+        mov eax, ecx
+        mov ebx, ecx
+        mul ebx
+        mov [result], ebx
+        add edx, [result]
+        dec ecx
+        loop factloop
+
+        mov eax, 1
+        int 0x80
+
+segment .bss
+        result resb 1
