@@ -1,26 +1,25 @@
-  GNU nano 6.2                                                  w12.asm                                                        
-_oddeven:
+oddeven:
         push ebp
         mov ebp, esp
-        sub esp, 4
-        mov eax, dword[ebp+4]
+        sub esp, 16
+        mov eax, DWORD[ebp+4]
         and eax, 1
         jz evnn
 
 odd:
-        mov edx, 1
-        mov ebx, 1
-        mov ecx, 'o'
-        mov eax, 4
+        mov eax, 'o'
+        mov [result], eax
+        mov eax, 1
         int 0x80
+        jmp end
 
 evnn:
-        mov edx,1       ;output length
-        mov ebx,1       ;stdout
-        mov ecx, 'e'
-        mov eax,4       ;system call (sys_write)
-        int 0x80        ;interrupt kernel
+        mov eax, 'e'
+        mov [result], eax
+        mov eax, 1
+        int 0x80
 
+end:
         leave
         ret
 
@@ -34,3 +33,6 @@ _start:
         mov ebx, 0
         mov eax, 1
         int 0x80
+
+segment .bss
+        result resb 1
