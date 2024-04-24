@@ -42,3 +42,12 @@ _start:
 
 segment .bss
         fd_out resb 1
+
+
+```
+One of the challenges that came with this activity was that it was difficult to decide how to implement the appended text. 
+I had to figure out whether I wanted to make a new variable or just input the entire block of text manually into a register.
+Also, determining how to calculate and display the lengths of the text was another challenge.
+This was similar to the text portion of the actitity in that I had to find whether to figure out the exact number of bytes
+the text was, or to subtract the length value from the $ operator to get the number of bytes. 
+Once that was figured out, I needed to organize the block of code so that 19 was saved to the eax register for appending. 
