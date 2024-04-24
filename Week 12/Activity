@@ -1,8 +1,8 @@
-oddeven:
+_oddeven:
         push ebp
         mov ebp, esp
-        sub esp, 16
-        mov eax, DWORD[ebp+4]
+        sub esp, 4
+        mov eax, DWORD[ebp+8]
         and eax, 1
         jz evnn
 
@@ -11,17 +11,17 @@ odd:
         mov [result], eax
         mov eax, 1
         int 0x80
-        jmp end
+        ret
 
 evnn:
         mov eax, 'e'
         mov [result], eax
         mov eax, 1
         int 0x80
+        ret
 
 end:
         leave
-        ret
 
 section .text
         global _start
