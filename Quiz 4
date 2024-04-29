@@ -1,0 +1,45 @@
+addvariables:
+        push ebp
+        mov ebp, esp
+        sub esp, 16
+
+        mov eax, DWORD[ebp+8]
+        mov DWORD[ebp-4], eax
+
+        mov eax, DWORD[ebp+12]
+        mov DWORD[ebp-8], eax
+
+        mov eax, DWORD[ebp+16]
+        mov DWORD[ebp-12], eax
+
+        mov eax, DWORD[ebp-8]
+        mov edx, DWORD[ebp-4]
+        lea eax, [edx+eax]
+        add eax, DWORD[ebp-12]
+        mov DWORD[ebp-16], eax
+        mov edx, DWORD[ebp-16]
+
+        mov [result], edx
+
+        leave
+        ret
+
+section .text
+        global _start
+
+_start:
+        push x
+        push y
+        push z
+        call addvariables
+
+        mov eax, 1
+        int 0x80
+
+section .bss
+        result resb 1
+
+section .data
+        x dd 5
+        y dd 10
+        z dd 15
