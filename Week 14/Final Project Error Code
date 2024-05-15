@@ -1,0 +1,133 @@
+section .data
+        filename db 'filemanagement.txt', 0h
+        line1 db 'Plain text: DANIEL', 0xa
+        length1 equ $ - line1
+
+        line2 db 'Key: apples', 0xa
+        length2 equ $ - line2
+
+        line3 db 'Encrypted text: '
+        length3 equ $ - line3
+
+        line4 db 0xa,  'Decrypted text: '
+        length4 equ $ - line4
+
+        plainfirst dd 'D'
+        plainsecond dd 'A'
+        plainthird dd 'N'
+        plainfourth dd 'I'
+        plainfifth dd 'E'
+        plainsixth dd 'L'
+
+        keyfirst dd 'a'
+        keysecond dd 'p'
+        keythird dd 'p'
+        keyfouth dd 'l'
+        keyfifth dd 'e'
+        keysixth dd 's'
+
+section .text
+        global _start
+
+_start:
+        mov ecx, 0711o
+        mov ebx, filename
+        mov eax, 8
+        int 0x80
+
+        mov [fd_out], eax
+
+        mov eax, 4
+        mov ebx, [fd_out]
+        mov ecx, line1
+        mov edx, 19
+        int 0x80
+
+        mov eax, 4
+        mov ebx, [fd_out]
+        mov ecx, line2
+        mov edx, 12
+        int 0x80
+
+        mov eax, 4
+        mov ebx, [fd_out]
+        mov ecx, line3
+        mov edx, 16
+        int 0x80
+
+        call encryptcheck
+
+        mov eax, 5
+        mov ebx, filename
+        mov ecx, 2
+        mov edx, 0777o
+        int 0x80
+
+        mov [fd_out], eax
+
+        mov eax, 19
+        mov ebx, [fd_out]
+        mov ecx, 48
+        mov edx, 0
+        int 0x80
+
+        mov eax, 4
+        mov ebx, [fd_out]
+        mov ecx, encrypt1
+        mov edx, 2
+        int 0x80
+
+        mov eax, 4
+        mov ebx, [fd_out]
+        mov ecx, line4
+        mov edx, 17
+        int 0x80
+
+        call decryptcheck
+
+        mov eax, 5
+        mov ebx, filename
+        mov ecx, 2
+        mov edx, 0777o
+        int 0x80
+
+        mov [fd_out], eax
+
+        call openappendwritedecrypt1
+
+        mov eax, 6
+        mov ebx, [fd_out]
+        int 0x80
+
+        mov eax, 1
+        int 0x80
+
+encryptcheck:
+        mov eax, [plainfirst]
+        xor eax, [keyfirst]
+        mov [encrypt1], eax
+        ret
+
+decryptcheck:
+        mov eax, [encrypt1]
+        xor eax, [keyfirst]
+        mov [decrypt1], eax
+        ret
+
+openappendwritedecrypt1:
+        mov eax, 19
+        mov ebx, filename
+        mov ecx, 65
+        mov edx, 0
+
+        mov eax, 4
+        mov ebx, [fd_out]
+        mov ecx, decrypt1
+        mov edx, 3
+        int 0x80
+        ret
+
+segment .bss
+        fd_out resb 1
+        encrypt1 resb 16
+        decrypt1 resb 1
