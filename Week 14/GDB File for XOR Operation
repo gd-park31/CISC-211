@@ -1,0 +1,35 @@
+section .data
+        plainfirst dd 'D'
+        plainsecond dd 'A'
+        plainthird dd 'N'
+        plainfourth dd 'I'
+        plainfifth dd 'E'
+        plainsixth dd 'L'
+
+        keyfirst dd 'a'
+        keysecond dd 'p'
+        keythird dd 'p'
+        keyfouth dd 'l'
+        keyfifth dd 'e'
+        keysixth dd 's'
+
+section .text
+        global _start
+
+_start:
+        call encryptcheck
+
+        mov eax, 1
+        int 0x80
+
+encryptcheck:
+        mov eax, [plainfirst]
+        xor eax, [keyfirst]
+        mov [encrypt1], eax
+        mov ebx, [encrypt1]
+        ret
+
+segment .bss
+        fd_out resb 1
+        encrypt1 resb 1
+        decrypt1 resb 1
